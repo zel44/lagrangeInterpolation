@@ -17,20 +17,24 @@ var step = 0.01, values ={};
 		}
 		return lagrange_pol;
 	};
-	
+
 var getValues = function() {
 		values = {}
-		values.x = []
-		values.y = []
-		document.getElementById('x').value.split(' ').forEach(function(value){
-			values.x.push(parseFloat(value));
-		});
-		document.getElementById('y').value.split(' ').forEach(function(value){
-			values.y.push(parseFloat(value));
-		});
+		initValues = function(coordName, defaultValues) {
+			values[coordName] = []
+			document.getElementById(coordName).value.split(' ').forEach(function(value){
+				values[coordName].push(parseFloat(value));
+			});
+			if (values[coordName].length === 0 || isNaN(values[coordName][0])) {
+				values[coordName] = defaultValues
+			}
+			values[coordName] = values[coordName].sort();
+		};
+		initValues('x',[1, 3, 4]);
+		initValues('y',[12, 4, 6]);
 		return values;
 	};
-	
+
 (document.getElementById('start')).addEventListener('click', function(){
 
 	var getDataArray = function(values){
